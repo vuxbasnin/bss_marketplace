@@ -1,31 +1,76 @@
-import React, { useState, useCallback } from 'react';
-import { Container, Fab } from '@material-ui/core';
-import { Modal, Box, Typography } from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import { Container } from '@material-ui/core';
+import { Modal, Box, Button, Typography } from '@material-ui/core';
+import WalletIcon from '@mui/icons-material/Wallet';
+import { ethers } from 'ethers';
 
-import useStyles from './styles'
+import useStyles from './styles';
 
 export default function Home() {
-    const classes = useStyles()
+    const classes = useStyles();
     const [open, setOpen] = useState(true);
+    const [loginSuccess, setLogin] = useState(false);
+    const [data, setData] = useState({
+        address: '',
+        Balance: null,
+    });
+
+    useEffect(() => {
+        window.ethereum.on('accountsChanged', (accounts) => {
+            getBalance(accounts[0])
+        }
+     )}, [])
+
     const handlerClose = () => setOpen(false);
+
+    const onClickLogin = () => {
+        //Asking if metamask is already present or not
+        if (window.ethereum) {
+            window.ethereum
+                .request({
+                    method: 'eth_requestAccounts',
+                })
+                .then((res) => {
+                    console.log(res);
+                    getBalance(res[0]);
+                });
+        } else {
+            console.log('Install Metamask extension!');
+        }
+    };
+
+    const getBalance = (address) => {
+        window.ethereum
+            .request({
+                method: 'eth_getBalance',
+                params: [address, 'latest'],
+            })
+            .then((balance) => {
+                setData({
+                    address: address,
+                    Balance: ethers.utils.formatEther(balance),
+                });
+                setOpen(false);
+                setLogin(true);
+            });
+    };
 
     return (
         <Container maxWidth="lg">
             <Modal open={open} onClose={handlerClose}>
                 <Box className={classes.modal}>
-                    <Typography
-                        id="modal-modal-title"
-                        variant="h6"
-                        component="h2"
+                    <Button
+                        className={classes.button}
+                        variant="contained"
+                        endIcon={<WalletIcon />}
+                        onClick={onClickLogin}
                     >
-                        Text in a modal
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor
-                        ligula.
-                    </Typography>
+                        Login with MetaMask
+                    </Button>
                 </Box>
             </Modal>
+            <h1>{data.address}</h1>
+            <h2>{data.Balance}</h2>
         </Container>
     );
 }
