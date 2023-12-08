@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import {useDispatch} from 'react-redux'
 import { Container } from '@material-ui/core';
 import { Modal, Box, Button, Typography } from '@material-ui/core';
 import WalletIcon from '@mui/icons-material/Wallet';
 import { ethers } from 'ethers';
 
 import useStyles from './styles';
+import { loginMetamask } from '../../redux/actions/loginMetamask';
 
 export default function Home() {
     const classes = useStyles();
+    const dispatch = useDispatch()
     const [open, setOpen] = useState(true);
-    const [loginSuccess, setLogin] = useState(false);
-    const [data, setData] = useState({
-        address: '',
-        Balance: null,
-    });
+    const address = useSelector((state) => state.loginMetamask.address)
+    const balance = useSelector((state) => state.loginMetamask.balance);
 
     useEffect(() => {
-        window.ethereum.on('accountsChanged', (accounts) => {
-            getBalance(accounts[0])
-        }
-     )}, [])
+        dispatch(loginMetamask.loginMetamaskRequest())
+     }, [])
 
     const handlerClose = () => setOpen(false);
 
@@ -51,7 +49,6 @@ export default function Home() {
                     Balance: ethers.utils.formatEther(balance),
                 });
                 setOpen(false);
-                setLogin(true);
             });
     };
 
@@ -69,8 +66,8 @@ export default function Home() {
                     </Button>
                 </Box>
             </Modal>
-            <h1>{data.address}</h1>
-            <h2>{data.Balance}</h2>
+            <h1>{address}</h1>
+            <h2>{balance}</h2>
         </Container>
     );
 }
