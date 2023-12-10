@@ -1,4 +1,4 @@
-import { INIT_STATE } from '../../constant';
+import { INIT_STATE } from '../../constant'
 import { getType } from '../actions';
 import { showModal, hideModal } from '../actions/modal';
 

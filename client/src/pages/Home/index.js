@@ -1,59 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Container } from '@material-ui/core';
-import { Modal, Box, Button, Typography } from '@material-ui/core';
+import { Modal, Box, Button } from '@material-ui/core';
 import WalletIcon from '@mui/icons-material/Wallet';
 import { ethers } from 'ethers';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { loginMetamaskState$ } from '../../redux/selectors/index';
 import useStyles from './styles';
+import { loginMetamask } from '../../redux/actions/loginMetamask';
+import { convertStringToEther } from '../../utils';
 
 export default function Home() {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const [open, setOpen] = useState(true);
-    const [loginSuccess, setLogin] = useState(false);
-    const [data, setData] = useState({
-        address: '',
-        Balance: null,
-    });
-
-    useEffect(() => {
-        window.ethereum.on('accountsChanged', (accounts) => {
-            getBalance(accounts[0])
-        }
-     )}, [])
+    const loginResponse = useSelector(loginMetamaskState$);
+    console.log(loginResponse);
 
     const handlerClose = () => setOpen(false);
 
-    const onClickLogin = () => {
-        //Asking if metamask is already present or not
-        if (window.ethereum) {
-            window.ethereum
-                .request({
-                    method: 'eth_requestAccounts',
-                })
-                .then((res) => {
-                    console.log(res);
-                    getBalance(res[0]);
-                });
-        } else {
-            console.log('Install Metamask extension!');
-        }
-    };
-
-    const getBalance = (address) => {
-        window.ethereum
-            .request({
-                method: 'eth_getBalance',
-                params: [address, 'latest'],
-            })
-            .then((balance) => {
-                setData({
-                    address: address,
-                    Balance: ethers.utils.formatEther(balance),
-                });
-                setOpen(false);
-                setLogin(true);
-            });
-    };
+    const onClickLogin = useCallback(() => {
+        dispatch(loginMetamask.loginMetamaskRequest());
+        setOpen(false);
+    }, [dispatch]);
 
     return (
         <Container maxWidth="lg">
@@ -69,8 +38,8 @@ export default function Home() {
                     </Button>
                 </Box>
             </Modal>
-            <h1>{data.address}</h1>
-            <h2>{data.Balance}</h2>
+            <h1>{loginResponse.address}</h1>
+            <h2>{loginResponse.balance}</h2>
         </Container>
     );
 }

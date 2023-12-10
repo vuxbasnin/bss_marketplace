@@ -1,6 +1,6 @@
-import { createAction } from "redux-actions";
+import { createActions } from "redux-actions";
 
-export const loginMetamask = createAction({
+export const loginMetamask = createActions({
     loginMetamaskRequest: undefined,
     loginMetamaskSuccess: (payload) => payload,
     loginMetamaskFailure: (error) => error,

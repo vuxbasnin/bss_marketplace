@@ -4,10 +4,10 @@ export const INIT_STATE = {
         data: [],
     },
     modal: {
-        isShow: false
+        isShow: false,
     },
-    loginMetaMask: {
+    loginMetamask: {
         isLoading: false,
         data: [],
-    }
+    },
 };

@@ -2,8 +2,8 @@ import { INIT_STATE } from '../../constant';
 import { getType } from '../actions';
 import { loginMetamask } from '../actions/loginMetamask';
 
-export default function loginMetamaskReducer(
-    state = INIT_STATE.loginMetaMask,
+export default function LoginMetamaskReducer(
+    state = INIT_STATE.loginMetamask,
     action
 ) {
     switch (action.type) {
@@ -24,6 +24,8 @@ export default function loginMetamaskReducer(
                 loading: false,
             };
         default:
-            break;
+            return {
+                ...state
+            }
     }
 }
