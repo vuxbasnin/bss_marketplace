@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Container } from '@material-ui/core';
 import { Modal, Box, Button } from '@material-ui/core';
 import WalletIcon from '@mui/icons-material/Wallet';
@@ -16,13 +16,19 @@ export default function Home() {
     const [open, setOpen] = useState(true);
     const loginResponse = useSelector(loginMetamaskState$);
     console.log(loginResponse);
+    
+    const handleLogin = useCallback(() => {
+        dispatch(loginMetamask.loginMetamaskRequest());
+        if (open) setOpen(false);
+    }, [dispatch, open]);
+
+    useEffect(() => {
+        window.ethereum.on('accountsChanged', handleLogin);
+        return () =>
+            window.ethereum.removeListener('accountsChanged', handleLogin);
+    }, [handleLogin]);
 
     const handlerClose = () => setOpen(false);
-
-    const onClickLogin = useCallback(() => {
-        dispatch(loginMetamask.loginMetamaskRequest());
-        setOpen(false);
-    }, [dispatch]);
 
     return (
         <Container maxWidth="lg">
@@ -32,7 +38,7 @@ export default function Home() {
                         className={classes.button}
                         variant="contained"
                         endIcon={<WalletIcon />}
-                        onClick={onClickLogin}
+                        onClick={handleLogin}
                     >
                         Login with MetaMask
                     </Button>
