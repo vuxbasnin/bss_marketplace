@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const bgColor = '#f5b5b5';
+import { bgModal } from '../../constant';
 
 export default makeStyles((theme) => ({
     modal: {
@@ -9,7 +9,7 @@ export default makeStyles((theme) => ({
         transform: 'translate(-50%, -50%)',
         position: 'absolute',
         width: 400,
-        backgroundColor: bgColor,
+        backgroundColor: bgModal,
         boxShadow: theme.shadows[10],
         outline: 'none',
         borderRadius: 100,
@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
     button: {
         width: '100%',
         height: '100%',
-        backgroundColor: bgColor,
+        backgroundColor: bgModal,
         outline: 'none !important',
         padding: theme.spacing(2, 4, 2),
         borderRadius: 100,

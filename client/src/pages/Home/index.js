@@ -15,7 +15,6 @@ export default function Home() {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(true);
     const loginResponse = useSelector(loginMetamaskState$);
-    console.log(loginResponse);
     
     const handleLogin = useCallback(() => {
         dispatch(loginMetamask.loginMetamaskRequest());
