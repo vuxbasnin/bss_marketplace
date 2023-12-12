@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Container } from '@material-ui/core';
 import { Modal, Box, Button } from '@material-ui/core';
 import WalletIcon from '@mui/icons-material/Wallet';
+import MenuIcon from '@mui/icons-material/Menu';
 import { ethers } from 'ethers';
 import { useSelector, useDispatch } from 'react-redux';
 

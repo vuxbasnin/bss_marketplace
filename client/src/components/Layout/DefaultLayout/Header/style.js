@@ -7,11 +7,13 @@ export default makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         backgroundColor: bgHeaderHome,
+        alignItems: 'center',
     },
     logo: {
         position: 'relative',
         color: 'white',
-        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 20,
     },
     btnLogin: {
         position: 'relative',
