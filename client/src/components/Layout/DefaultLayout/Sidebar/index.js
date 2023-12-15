@@ -1,5 +1,14 @@
+import Side from './Side';
+import RoutesSideBar from './Routes';
+import { Container } from '@material-ui/core';
+
 function Sidebar() {
-    return <h2>Sidebar</h2>;
+    return (
+        <Container>
+            <Side />
+            <RoutesSideBar />
+        </Container>
+    );
 }
 
 export default Sidebar;
