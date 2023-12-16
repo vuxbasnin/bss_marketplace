@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-import { bgHeaderHome } from '../../../../../constant';
+import { bgHeaderHome, clTextMainChoose } from '../../../../../constant';
 
 export default makeStyles((theme) => ({
     header: {
@@ -15,7 +15,7 @@ export default makeStyles((theme) => ({
     },
     logo: {
         position: 'relative',
-        color: 'black',
+        color: clTextMainChoose,
         alignItems: 'center',
         marginLeft: 20,
     },
