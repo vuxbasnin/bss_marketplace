@@ -124,7 +124,7 @@ function Side() {
     const theme = useTheme();
     const classes = useStyles();
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -192,6 +192,10 @@ function Side() {
                             sx={{
                                 display: 'block',
                                 color: clTextMainNoChoose,
+                                '&:hover': {
+                                    backgroundColor: clBgHoverItemSidebar,
+                                    color: clTextMainChoose,
+                                },
                             }}
                         >
                             <ListItemButton
@@ -200,10 +204,7 @@ function Side() {
                                     minHeight: 48,
                                     justifyContent: open ? 'initial' : 'center',
                                     px: 2.5,
-                                    '&:hover': {
-                                        backgroundColor: clBgHoverItemSidebar,
-                                        color: clTextMainChoose,
-                                    },
+                                    color: 'inherit',
                                 }}
                             >
                                 <ListItemIcon
@@ -211,7 +212,7 @@ function Side() {
                                         minWidth: 0,
                                         mr: open ? 3 : 'auto',
                                         justifyContent: 'center',
-                                        color: clTextMainNoChoose,
+                                        color: 'inherit',
                                     }}
                                 >
                                     {index === 0 ? <HomeIcon /> : null}
@@ -220,7 +221,10 @@ function Side() {
                                 </ListItemIcon>
                                 <ListItemText
                                     primary={text}
-                                    sx={{ opacity: open ? 1 : 0 }}
+                                    sx={{
+                                        opacity: open ? 1 : 0,
+                                        color: 'inherit',
+                                    }}
                                 />
                             </ListItemButton>
                         </ListItem>
@@ -237,20 +241,26 @@ function Side() {
                         <ListItem
                             key={text}
                             disablePadding
-                            sx={{ display: 'block' }}
+                            sx={{
+                                display: 'block',
+                                color: clTextMainNoChoose,
+                                '&:hover': {
+                                    backgroundColor:
+                                        clBgHoverItemSidebar + '!important',
+                                    color: clTextMainChoose + '!important',
+                                },
+                            }}
                         >
-                            {index === 0 || index === 1 ? <Divider /> : null}
+                            {index === 0 || index === 1 ? (
+                                <Divider sx={{ backgroundColor: '#434543' }} />
+                            ) : null}
                             <ListItemButton
                                 href={linkContactSideBar[text]}
                                 sx={{
                                     minHeight: 48,
                                     justifyContent: open ? 'initial' : 'center',
                                     px: 2.5,
-                                    color: clTextMainNoChoose,
-                                    '&:hover': {
-                                        backgroundColor: clBgHoverItemSidebar,
-                                        color: clTextMainChoose,
-                                    },
+                                    color: 'inherit',
                                 }}
                             >
                                 <ListItemIcon
@@ -258,7 +268,7 @@ function Side() {
                                         minWidth: 0,
                                         mr: open ? 3 : 'auto',
                                         justifyContent: 'center',
-                                        color: clTextMainNoChoose,
+                                        color: 'inherit',
                                     }}
                                 >
                                     {index % 2 === 0 ? (
@@ -269,7 +279,10 @@ function Side() {
                                 </ListItemIcon>
                                 <ListItemText
                                     primary={text}
-                                    sx={{ opacity: open ? 1 : 0 }}
+                                    sx={{
+                                        opacity: open ? 1 : 0,
+                                        color: 'inherit',
+                                    }}
                                 />
                             </ListItemButton>
                         </ListItem>
