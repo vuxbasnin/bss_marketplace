@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { styled, useTheme } from '@mui/material/styles';
-import { Button } from '@material-ui/core';
+import { Button, Modal, Container } from '@material-ui/core';
+import WalletIcon from '@mui/icons-material/Wallet';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -24,14 +26,19 @@ import LoginIcon from '@mui/icons-material/Login';
 import HomeIcon from '@mui/icons-material/Home';
 import MarketplaceIcon from '@mui/icons-material/LocalGroceryStore';
 import EventsIcon from '@mui/icons-material/EmojiEvents';
+import LogoutIcon from '@mui/icons-material/Logout';
 
-import useStyles from './style';
+import useStyles from './styles';
 import {
     bgHeaderHome,
     clTextMainChoose,
     clTextMainNoChoose,
     clBgHoverItemSidebar,
 } from '../../../../../constant';
+import { loginMetamaskState$ } from '../../../../../redux/selectors';
+import { loginMetamask } from '../../../../../redux/actions/loginMetamask';
+import { KEY_ADDRESS, KEY_LOGIN } from '../../../../../preference';
+import { convertStringAddress } from '../../../../../utils';
 
 const drawerWidth = 240;
 
@@ -123,8 +130,16 @@ const listContactSideBar = [
 function Side() {
     const theme = useTheme();
     const classes = useStyles();
-
+    const dispatch = useDispatch();
+    const loginResponse = useSelector(loginMetamaskState$);
     const [open, setOpen] = React.useState(true);
+    const [openModal, setOpenModal] = React.useState(false);
+    const [loginSuccess, setLoginSuccess] = React.useState(
+        localStorage.getItem(KEY_LOGIN, 'false')
+    );
+    const [userAddress, setUserAddress] = React.useState(
+        localStorage.getItem(KEY_ADDRESS, '')
+    );
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -134,9 +149,53 @@ function Side() {
         setOpen(false);
     };
 
+    const handleLogin = React.useCallback(() => {
+        dispatch(loginMetamask.loginMetamaskRequest());
+        if (openModal) setOpenModal(false);
+    }, [dispatch, openModal]);
+
+    const handleClickButtonLogin = () => {
+        if (loginSuccess === 'true' || loginResponse.length !== 0) return;
+        setOpenModal(true);
+    };
+
+    React.useEffect(() => {
+        if (loginResponse.length !== 0) {
+            localStorage.setItem(KEY_LOGIN, 'true');
+            localStorage.setItem(KEY_ADDRESS, loginResponse.address);
+            setLoginSuccess('true');
+            setUserAddress(loginResponse.address);
+        }
+        window.ethereum.on('accountsChanged', handleLogin);
+        return () => {
+            window.ethereum.removeListener('accountsChanged', handleLogin);
+        };
+    }, [handleLogin, loginResponse]);
+
+    const handlerClose = () => {
+        setOpenModal(false);
+    };
+
+    console.log('NINVB ' + loginResponse.length + ' ' + loginSuccess);
+
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
+
+            <Container maxWidth="lg">
+                <Modal children open={openModal} onClose={handlerClose}>
+                    <Box className={classes.modal}>
+                        <Button
+                            className={classes.button}
+                            variant="contained"
+                            endIcon={<WalletIcon />}
+                            onClick={handleLogin}
+                        >
+                            Login with MetaMask
+                        </Button>
+                    </Box>
+                </Modal>
+            </Container>
 
             <AppBar position="fixed" open={open}>
                 <Toolbar className={classes.header}>
@@ -155,10 +214,20 @@ function Side() {
 
                     <Button
                         className={classes.btnLogin}
-                        startIcon={<LoginIcon />}
+                        startIcon={
+                            loginResponse.length === 0 ? <LoginIcon /> : null
+                        }
+                        endIcon={
+                            loginResponse.length !== 0 ? <LogoutIcon /> : null
+                        }
                         variant="contained"
+                        onClick={handleClickButtonLogin}
                     >
-                        Log in
+                        {loginResponse.length === 0 && loginSuccess === 'false'
+                            ? 'Login'
+                            : convertStringAddress(
+                                  String(userAddress || loginResponse.address)
+                              )}
                     </Button>
                 </Toolbar>
             </AppBar>

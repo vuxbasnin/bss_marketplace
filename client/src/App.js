@@ -7,14 +7,31 @@ import { KEY_LOGIN } from './preference';
 
 function App() {
     useEffect(() => {
-        const handleLogout = () => {
-            localStorage.setItem(KEY_LOGIN, false);
+        const handleBeforeUnload = (event) => {
+            localStorage.setItem(KEY_LOGIN, "false");
         };
 
-        window.addEventListener('beforeunload', handleLogout);
+        const handleUnload = (event) => {
+            // Kiểm tra sự kiện có chứa dữ liệu về việc làm mới hay không
+            const isReload =
+                event.currentTarget.performance.navigation.type === 1;
+
+            if (isReload) {
+                console.log('Tab đang được làm mới');
+                // Thực hiện các hành động cần thiết khi tab được làm mới
+            } else {
+                console.log('Tab đang được đóng');
+                // Thực hiện các hành động cần thiết khi tab đóng
+                localStorage.setItem(KEY_LOGIN, "false");
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        window.addEventListener('unload', handleUnload);
 
         return () => {
-            window.removeEventListener('beforeunload', handleLogout);
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+            window.removeEventListener('unload', handleUnload);
         };
     }, []);
 
