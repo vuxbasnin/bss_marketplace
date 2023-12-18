@@ -150,7 +150,7 @@ function Side() {
                             ...(open && { display: 'none' }),
                         }}
                     >
-                        <MenuIcon />
+                        <MenuIcon sx={{ color: clTextMainChoose }} />
                     </IconButton>
 
                     <Button
@@ -178,9 +178,11 @@ function Side() {
                     </Grid>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'rtl' ? (
-                            <ChevronRightIcon sx={{ color: 'white' }} />
+                            <ChevronRightIcon
+                                sx={{ color: clTextMainChoose }}
+                            />
                         ) : (
-                            <ChevronLeftIcon sx={{ color: 'white' }} />
+                            <ChevronLeftIcon sx={{ color: clTextMainChoose }} />
                         )}
                     </IconButton>
                 </DrawerHeader>
