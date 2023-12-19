@@ -38,7 +38,7 @@ import {
 import { loginMetamaskState$ } from '../../../../../redux/selectors';
 import { loginMetamask } from '../../../../../redux/actions/loginMetamask';
 import { KEY_ADDRESS, KEY_LOGIN } from '../../../../../preference';
-import { convertStringAddress } from '../../../../../utils';
+import { convertStringAddress, getPref, getSessionsPref, setPref, setSessionsPref } from '../../../../../utils';
 
 const drawerWidth = 240;
 
@@ -134,11 +134,9 @@ function Side() {
     const loginResponse = useSelector(loginMetamaskState$);
     const [open, setOpen] = React.useState(true);
     const [openModal, setOpenModal] = React.useState(false);
-    const [loginSuccess, setLoginSuccess] = React.useState(
-        localStorage.getItem(KEY_LOGIN, 'false')
-    );
+    const [loginSuccess, setLoginSuccess] = React.useState(getSessionsPref(KEY_LOGIN));
     const [userAddress, setUserAddress] = React.useState(
-        localStorage.getItem(KEY_ADDRESS, '')
+        getSessionsPref(KEY_ADDRESS)
     );
 
     const handleDrawerOpen = () => {
@@ -149,21 +147,27 @@ function Side() {
         setOpen(false);
     };
 
+    console.log(loginSuccess);
+
     const handleLogin = React.useCallback(() => {
         dispatch(loginMetamask.loginMetamaskRequest());
         if (openModal) setOpenModal(false);
     }, [dispatch, openModal]);
 
     const handleClickButtonLogin = () => {
-        if (loginSuccess === 'true' || loginResponse.length !== 0) return;
+        if (loginSuccess) return;
         setOpenModal(true);
+    };
+
+    const handlerClose = () => {
+        setOpenModal(false);
     };
 
     React.useEffect(() => {
         if (loginResponse.length !== 0) {
-            localStorage.setItem(KEY_LOGIN, 'true');
-            localStorage.setItem(KEY_ADDRESS, loginResponse.address);
-            setLoginSuccess('true');
+            setSessionsPref(KEY_LOGIN, true);
+            setSessionsPref(KEY_ADDRESS, loginResponse.address);
+            setLoginSuccess(true);
             setUserAddress(loginResponse.address);
         }
         window.ethereum.on('accountsChanged', handleLogin);
@@ -171,12 +175,6 @@ function Side() {
             window.ethereum.removeListener('accountsChanged', handleLogin);
         };
     }, [handleLogin, loginResponse]);
-
-    const handlerClose = () => {
-        setOpenModal(false);
-    };
-
-    console.log('NINVB ' + loginResponse.length + ' ' + loginSuccess);
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -214,16 +212,12 @@ function Side() {
 
                     <Button
                         className={classes.btnLogin}
-                        startIcon={
-                            loginResponse.length === 0 ? <LoginIcon /> : null
-                        }
-                        endIcon={
-                            loginResponse.length !== 0 ? <LogoutIcon /> : null
-                        }
+                        startIcon={!loginSuccess ? <LoginIcon /> : null}
+                        endIcon={loginSuccess ? <LogoutIcon /> : null}
                         variant="contained"
                         onClick={handleClickButtonLogin}
                     >
-                        {loginResponse.length === 0 && loginSuccess === 'false'
+                        {!loginSuccess
                             ? 'Login'
                             : convertStringAddress(
                                   String(userAddress || loginResponse.address)
