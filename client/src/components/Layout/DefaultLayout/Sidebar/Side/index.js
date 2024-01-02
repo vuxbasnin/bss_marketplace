@@ -27,6 +27,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import MarketplaceIcon from '@mui/icons-material/LocalGroceryStore';
 import EventsIcon from '@mui/icons-material/EmojiEvents';
 import LogoutIcon from '@mui/icons-material/Logout';
+import ICO from '@mui/icons-material/Inventory';
 
 import useStyles from './styles';
 import {
@@ -111,9 +112,10 @@ const linkChildSideBar = {
     Home: '/',
     Marketplace: '/marketplace',
     Events: '/events',
+    ICO: '/ico'
 };
 
-const listChildSideBar = ['Home', 'Marketplace', 'Events'];
+const listChildSideBar = ['Home', 'Marketplace', 'Events', 'ICO'];
 
 const linkContactSideBar = {
     'Support Center': '/support-center',
@@ -283,6 +285,7 @@ function Side() {
                                     {index === 0 ? <HomeIcon /> : null}
                                     {index === 1 ? <MarketplaceIcon /> : null}
                                     {index === 2 ? <EventsIcon /> : null}
+                                    {index === 3 ? <ICO /> : null}
                                 </ListItemIcon>
                                 <ListItemText
                                     primary={text}
