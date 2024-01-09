@@ -1,8 +1,7 @@
-import getChainIdFromEnv, { SMART_CONTRACT_ADDRESS } from './common';
+import getChainIdFromEnv, { AddressType, SMART_CONTRACT_ADDRESS } from './common';
 
-const getAddress = (address) => {
-    if (typeof address !== 'String') return;
-    const CHAIN_ID = getChainIdFromEnv();
+const getAddress = (address: AddressType) => {
+    const CHAIN_ID = getChainIdFromEnv() as keyof AddressType;
     return address[CHAIN_ID];
 };
 

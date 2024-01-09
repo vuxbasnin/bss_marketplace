@@ -1,6 +1,6 @@
-export const AddressType = {
-    97: String,
-    56: String
+export type AddressType = {
+    97: string,
+    56: string
 }
 
 export const CHAIN_ID = {
@@ -15,6 +15,7 @@ export default function getChainIdFromEnv() {
 };
 
 export const getRPC = () => {
+    console.log(getChainIdFromEnv() + ' --- ' + process.env.PUBLIC_RPC_TESTNET);
     if (getChainIdFromEnv() === CHAIN_ID.MAINNET)
         return process.env.PUBLIC_RPC_MAINNET;
     return process.env.PUBLIC_RPC_TESTNET;

@@ -1,5 +1,10 @@
 {
   "dependencies": {
-    "react-file-base64": "^1.0.3"
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.10.7",
+    "@types/react": "^18.2.47",
+    "@types/react-dom": "^18.2.18",
+    "react-file-base64": "^1.0.3",
+    "typescript": "^5.3.3"
   }
 }
