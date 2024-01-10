@@ -7,7 +7,7 @@ import { getBssCrowdSaleAddress } from './utils/getAddress';
 export default class CrowdSaleContract extends BaseInterface {
     constructor(provider?: ethers.providers.Web3Provider) {
         const rpcProvider = new ethers.providers.JsonRpcProvider(getRPC());
-        console.log(rpcProvider + " --- " + getRPC());
+        console.log(rpcProvider + ' --- ' + getRPC());
         super(
             provider || rpcProvider,
             getBssCrowdSaleAddress(),
@@ -27,7 +27,7 @@ export default class CrowdSaleContract extends BaseInterface {
         return this._toNumber(rate);
     }
 
-    async getUsdtRate(): Promise<number> { 
+    async getUsdtRate(): Promise<number> {
         const rate = await this._contract.USDT_rate();
         return this._toNumber(rate);
     }
@@ -36,15 +36,15 @@ export default class CrowdSaleContract extends BaseInterface {
         const rate = await this.getBnbRate();
         const tx = await this._contract.buyTokenByBNB({
             ...this._option,
-            value: this._numberToEth(amount / rate)
+            value: this._numberToEth(amount / rate),
         });
-        return this._handleTransactionResponse(tx)
+        return this._handleTransactionResponse(tx);
     }
-    
+
     async buyTokenByUSDT(amount: number) {
         const rate = await this.getUsdtRate();
         const tx = await this._contract.buyTokenByUSDT(
-            this._numberToEth(amount),
+            this._numberToEth(amount / rate),
             this._option
         );
         return this._handleTransactionResponse(tx);

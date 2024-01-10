@@ -1,15 +1,14 @@
-import useStyle from './styles';
+
 import Box from '@mui/system/Box';
 import * as React from 'react';
+
+import useStyle from './styles';
 import { IRate } from '../../interfaces';
 import CrowdSaleContract from '../../contracts/CrowdSaleContract';
 
 export default function ICO() {
     const classes = useStyle();
     const [rate, setRate] = React.useState<IRate>({ usdtRate: 0, bnbRate: 0 });
-
-    console.log(process.env.PUBLIC_CHAIN_ID);
-    
 
     const getRate = React.useCallback(async () => {
         const crowdSaleContract = new CrowdSaleContract();
