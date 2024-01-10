@@ -8,6 +8,9 @@ export default function ICO() {
     const classes = useStyle();
     const [rate, setRate] = React.useState<IRate>({ usdtRate: 0, bnbRate: 0 });
 
+    console.log(process.env.PUBLIC_CHAIN_ID);
+    
+
     const getRate = React.useCallback(async () => {
         const crowdSaleContract = new CrowdSaleContract();
         const bnbRate = await crowdSaleContract.getBnbRate();

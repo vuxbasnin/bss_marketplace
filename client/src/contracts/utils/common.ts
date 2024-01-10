@@ -8,7 +8,7 @@ export const CHAIN_ID = {
     MAINNET: 56
 }
 
-export default function getChainIdFromEnv() {
+export default function getChainIdFromEnv(): number {
     const env = process.env.PUBLIC_CHAIN_ID;
     if (!env) { return 97 };
     return parseInt(env)
