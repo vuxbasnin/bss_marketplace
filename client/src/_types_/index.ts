@@ -7,3 +7,13 @@ export interface IRate {
     usdtRate: number,
     bnbRate: number
 }
+
+export enum TOKEN {
+    BNB = "BNB",
+    USDT = "USDT"
+}
+
+export interface IItemIco {
+    thumb: string,
+    logo: string
+}
