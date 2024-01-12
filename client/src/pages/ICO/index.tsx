@@ -1,12 +1,10 @@
-
-import Box from '@mui/system/Box';
 import * as React from 'react';
+import { Container, Grid } from '@mui/material';
 
 import useStyle from './styles';
 import { IItemIco, IRate } from '../../_types_';
 import CrowdSaleContract from '../../contracts/CrowdSaleContract';
 import ItemIco from './ItemIco';
-import Grid from '@mui/material/Grid';
 
 export default function ICO() {
     const classes = useStyle();
@@ -24,36 +22,48 @@ export default function ICO() {
         getRate()
     }, [getRate])
 
-
-
     const listItem: Array<IItemIco> = [{
-        thumb: "/client/src/asset/images/img_thumb_bnb_ico.jpg",
-        logo: "/client/src/asset/images/img_bnb_icon.png",
+        thumb: require("../../asset/images/img_thumb_bnb_ico.jpg"),
+        logo: require("../../asset/images/img_bnb_icon.png"),
+        price: 1000
     },
     {
-        thumb: "/client/src/asset/images/img_thumb_bnb_ico.jpg",
-        logo: "/client/src/asset/images/img_bnb_icon.png",
+        thumb: require("../../asset/images/img_thumb_bnb_ico.jpg"),
+        logo: require("../../asset/images/img_bnb_icon.png"),
+        price: 2000
     },
     {
-        thumb: "/client/src/asset/images/img_thumb_bnb_ico.jpg",
-        logo: "/client/src/asset/images/img_bnb_icon.png",
+        thumb: require("../../asset/images/img_thumb_bnb_ico.jpg"),
+        logo: require("../../asset/images/img_bnb_icon.png"),
+        price: 3000
     },
     {
-        thumb: "/client/src/asset/images/img_thumb_usdt.jpg",
-        logo: "/client/src/asset/images/img_usdt_icon.png"
+        thumb: require("../../asset/images/img_thumb_usdt.jpg"),
+        logo: require("../../asset/images/img_usdt_icon.png"),
+        price: 1000
     },
     {
-        thumb: "/client/src/asset/images/img_thumb_usdt.jpg",
-        logo: "/client/src/asset/images/img_usdt_icon.png"
+        thumb: require("../../asset/images/img_thumb_usdt.jpg"),
+        logo: require("../../asset/images/img_usdt_icon.png"),
+        price: 2000
     },
     {
-        thumb: "/client/src/asset/images/img_thumb_usdt.jpg",
-        logo: "/client/src/asset/images/img_usdt_icon.png"
+        thumb: require("../../asset/images/img_thumb_usdt.jpg"),
+        logo: require("../../asset/images/img_usdt_icon.png"),
+        price: 3000
     }]
 
     return (
-        <Grid className={classes.box} container spacing={{ xs: 4, md: 6 }} columns={{ xs: 4, sm: 8, md: 12 }} >
-
-        </Grid>
+        <Container maxWidth="lg">
+            <Grid container  alignItems="stretch" justifyContent={'space-between'} marginTop={"10px"} bgcolor="#000">
+                {listItem.map((item, index) => {
+                    return (
+                        <Grid item  key={index} >
+                            <ItemIco item={item} />
+                        </Grid>
+                    )
+                })}
+            </Grid>
+        </Container>
     );
 }

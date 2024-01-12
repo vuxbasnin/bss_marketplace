@@ -7,16 +7,18 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function ItemIco() {
+import { IItemIco } from 'src/_types_';
+
+export default function ItemIco({ item }: { item: IItemIco }) {
     const classes = useStyle()
-    
+
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345, margin: "18px"}}>
             <CardMedia
                 component="img"
                 alt="green iguana"
                 height="140"
-                image="/static/images/cards/contemplative-reptile.jpg"
+                image={item.thumb}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
@@ -27,8 +29,10 @@ export default function ItemIco() {
                     species, ranging across all continents except Antarctica
                 </Typography>
             </CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+                {item.price}
+            </Typography>
             <CardActions>
-                <Button size="small">Share</Button>
                 <Button size="small">Learn More</Button>
             </CardActions>
         </Card>

@@ -15,5 +15,6 @@ export enum TOKEN {
 
 export interface IItemIco {
     thumb: string,
-    logo: string
+    logo: string,
+    price: number
 }
