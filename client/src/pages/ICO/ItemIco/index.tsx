@@ -8,32 +8,37 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import { IItemIco } from 'src/_types_';
+import { Box } from '@material-ui/core';
+import { bgHeaderHome } from 'src/constant';
 
 export default function ItemIco({ item }: { item: IItemIco }) {
     const classes = useStyle()
 
     return (
-        <Card sx={{ maxWidth: 345, margin: "18px"}}>
+        <Card className={classes.container} sx={{ backgroundColor: bgHeaderHome }}>
             <CardMedia
                 component="img"
                 alt="green iguana"
                 height="140"
                 image={item.thumb}
+                className={classes.imgThumb}
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                    Lizard
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000
-                    species, ranging across all continents except Antarctica
+                <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    image={item.logo}
+                    className={classes.imgLogo}
+                />
+                <Typography variant="h5" marginTop={'16px'} color={'white'}>
+                    {item.isBnb ? `BNB PACKAGE 0${item.price / 1000}` : `USDT PACKAGE 0${item.price / 1000}`}
                 </Typography>
             </CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-                {item.price}
+            <Typography gutterBottom variant="h5" className={classes.imgPackage}>
+                {item.price} BSS
             </Typography>
-            <CardActions>
-                <Button size="small">Learn More</Button>
+            <CardActions disableSpacing className={classes.btnBuy}>
+                <Button sx={{width: '100%'}} size="medium" variant='contained'>Buy now</Button>
             </CardActions>
         </Card>
     )

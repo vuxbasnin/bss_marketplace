@@ -13,7 +13,7 @@ export const INIT_STATE = {
 };
 
 export const bgModal = '#f5b5b5';
-export const bgHeaderHome = '#13161b';
+export const bgHeaderHome = '#13161B';
 
 //Sidebar
 export const clTextMainChoose = '#FF9345';

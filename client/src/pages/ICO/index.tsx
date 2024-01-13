@@ -5,6 +5,7 @@ import useStyle from './styles';
 import { IItemIco, IRate } from '../../_types_';
 import CrowdSaleContract from '../../contracts/CrowdSaleContract';
 import ItemIco from './ItemIco';
+import { bgHeaderHome } from 'src/constant';
 
 export default function ICO() {
     const classes = useStyle();
@@ -22,43 +23,32 @@ export default function ICO() {
         getRate()
     }, [getRate])
 
-    const listItem: Array<IItemIco> = [{
-        thumb: require("../../asset/images/img_thumb_bnb_ico.jpg"),
-        logo: require("../../asset/images/img_bnb_icon.png"),
-        price: 1000
-    },
-    {
-        thumb: require("../../asset/images/img_thumb_bnb_ico.jpg"),
-        logo: require("../../asset/images/img_bnb_icon.png"),
-        price: 2000
-    },
-    {
-        thumb: require("../../asset/images/img_thumb_bnb_ico.jpg"),
-        logo: require("../../asset/images/img_bnb_icon.png"),
-        price: 3000
-    },
-    {
-        thumb: require("../../asset/images/img_thumb_usdt.jpg"),
-        logo: require("../../asset/images/img_usdt_icon.png"),
-        price: 1000
-    },
-    {
-        thumb: require("../../asset/images/img_thumb_usdt.jpg"),
-        logo: require("../../asset/images/img_usdt_icon.png"),
-        price: 2000
-    },
-    {
-        thumb: require("../../asset/images/img_thumb_usdt.jpg"),
-        logo: require("../../asset/images/img_usdt_icon.png"),
-        price: 3000
-    }]
+    let listItem: Array<IItemIco> = [];
+
+    for (let i = 0; i < 6; i++) {
+        if (i <= 2) {
+            listItem.push({
+                thumb: require("../../asset/images/img_thumb_bnb_ico.jpg"),
+                logo: require("../../asset/images/img_bnb_icon.png"),
+                price: (i + 1) * 1000,
+                isBnb: true
+            });
+        } else {
+            listItem.push({
+                thumb: require("../../asset/images/img_thumb_usdt.jpg"),
+                logo: require("../../asset/images/img_usdt_icon.png"),
+                price: (i - 2) * 1000,
+                isBnb: false
+            });
+        }
+    }
 
     return (
-        <Container maxWidth="lg">
-            <Grid container  alignItems="stretch" justifyContent={'space-between'} marginTop={"10px"} bgcolor="#000">
+        <Container maxWidth="lg" fixed>
+            <Grid container className={classes.gridContainer}>
                 {listItem.map((item, index) => {
                     return (
-                        <Grid item  key={index} >
+                        <Grid item key={index} >
                             <ItemIco item={item} />
                         </Grid>
                     )

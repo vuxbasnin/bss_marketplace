@@ -60,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "@mui/system": "^5.15.4",
     "path-browserify": "^1.0.1"
   }
 }

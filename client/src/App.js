@@ -3,11 +3,15 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { publicRoutes } from './routes';
 import DefaultLayout from './components/Layout/DefaultLayout';
+import { bgHeaderHome } from './constant';
 
 function App() {
     return (
         <Router>
-            <div className="App">
+            <div
+                className="App"
+                style={{ backgroundColor: 'black', backgroundSize: 'auto auto' }}
+            >
                 <Routes>
                     {publicRoutes.map((route, index) => {
                         const Page = route.component;
