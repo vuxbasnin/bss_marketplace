@@ -17,5 +17,6 @@ export interface IItemIco {
     thumb: string,
     logo: string,
     price: number,
-    isBnb: boolean
+    isBnb: boolean,
+    rate: number
 }

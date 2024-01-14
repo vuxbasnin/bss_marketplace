@@ -31,14 +31,16 @@ export default function ICO() {
                 thumb: require("../../asset/images/img_thumb_bnb_ico.jpg"),
                 logo: require("../../asset/images/img_bnb_icon.png"),
                 price: (i + 1) * 1000,
-                isBnb: true
+                isBnb: true,
+                rate: rate.bnbRate
             });
         } else {
             listItem.push({
                 thumb: require("../../asset/images/img_thumb_usdt.jpg"),
                 logo: require("../../asset/images/img_usdt_icon.png"),
                 price: (i - 2) * 1000,
-                isBnb: false
+                isBnb: false,
+                rate: rate.usdtRate
             });
         }
     }

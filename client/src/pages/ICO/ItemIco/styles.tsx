@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import { bgHeaderHome } from "src/constant";
+import { bgHeaderHome, clTextMainChoose } from "src/constant";
 
 export default makeStyles((theme) => ({
     container: {
@@ -32,9 +32,28 @@ export default makeStyles((theme) => ({
         color: "white",
         fontSize: '18px !important',
     },
-    btnBuy: {
+    imgAmount: {
+        margin: 'auto !important',
+        width: "100% !important",
+        color: "white",
+        marginTop: '16px !important',
+        fontSize: '12px !important',
+    },
+    btnBuyEnable: {
         display: 'flex',
         margin: 'auto !important',
         width: "100% !important",
+        marginTop: '16px !important',
+        '&.MuiButton-root:hover': {
+            backgroundColor: clTextMainChoose,
+            color: 'white',
+        }
     },
+    btnBuyDisable: {
+        display: 'flex',
+        margin: 'auto !important',
+        width: "100% !important",
+        marginTop: '16px !important',
+        backgroundColor: 'gray !important',
+    }
 }))

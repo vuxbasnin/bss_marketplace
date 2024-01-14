@@ -149,8 +149,6 @@ function Side() {
         setOpen(false);
     };
 
-    console.log(loginSuccess);
-
     const handleLogin = React.useCallback(() => {
         dispatch(loginMetamask.loginMetamaskRequest());
         if (openModal) setOpenModal(false);
