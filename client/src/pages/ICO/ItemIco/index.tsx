@@ -46,18 +46,17 @@ export default function ItemIco({ item }: { item: IItemIco }) {
         let hash = '';
         const crowdContract = new CrowdSaleContract(web3Provider);
         if (item.isBnb) {
-            hash = await crowdContract.buyTokenByBNB(item.price/10);
-            console.log(item.price);
+            hash = await crowdContract.buyTokenByBNB(item.price * 100);
         } else {
             const usdtContract = new UsdtContract(web3Provider);
             await usdtContract.approve(crowdContract._contractAddress, item.rate)
-            hash = await crowdContract.buyTokenByUSDT(item.price/100)
+            hash = await crowdContract.buyTokenByUSDT(item.price)
         }
         console.log("hash " + hash + "item bnb " + item.isBnb);
         try {
-            
+
         } catch (error) {
-            
+
         }
     }
 
@@ -78,14 +77,14 @@ export default function ItemIco({ item }: { item: IItemIco }) {
                     className={classes.imgLogo}
                 />
                 <Typography variant="h5" marginTop={'16px'} color={'white'}>
-                    {item.isBnb ? `BNB PACKAGE 0${item.price / 1000}` : `USDT PACKAGE 0${item.price / 1000}`}
+                    {item.isBnb ? `BNB PACKAGE 0${item.price}` : `USDT PACKAGE 0${item.price}`}
                 </Typography>
             </CardContent>
             <Typography gutterBottom variant="h5" className={classes.imgPackage}>
-                {item.price} BSS
+                {item.price * 1000} BSS
             </Typography>
             <Typography gutterBottom variant="h5" className={classes.imgAmount}>
-                {item.isBnb ? `Amount of coins to pay: ${item.price / 10000} BNB` : `Amount of coins to pay: ${item.price / 100} USDT`}
+                {item.isBnb ? `Amount of coins to pay: ${item.price / 10} BNB` : `Amount of coins to pay: ${item.price * 100} USDT`}
             </Typography>
             <CardActions disableSpacing >
                 <LoadingButton

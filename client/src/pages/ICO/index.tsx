@@ -30,7 +30,7 @@ export default function ICO() {
             listItem.push({
                 thumb: require("../../asset/images/img_thumb_bnb_ico.jpg"),
                 logo: require("../../asset/images/img_bnb_icon.png"),
-                price: (i + 1) * 1000,
+                price: (i + 1),
                 isBnb: true,
                 rate: rate.bnbRate
             });
@@ -38,7 +38,7 @@ export default function ICO() {
             listItem.push({
                 thumb: require("../../asset/images/img_thumb_usdt.jpg"),
                 logo: require("../../asset/images/img_usdt_icon.png"),
-                price: (i - 2) * 1000,
+                price: (i - 2),
                 isBnb: false,
                 rate: rate.usdtRate
             });
