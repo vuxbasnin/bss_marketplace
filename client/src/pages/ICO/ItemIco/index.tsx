@@ -46,11 +46,11 @@ export default function ItemIco({ item }: { item: IItemIco }) {
         let hash = '';
         const crowdContract = new CrowdSaleContract(web3Provider);
         if (item.isBnb) {
-            hash = await crowdContract.buyTokenByBNB(item.price * 100);
+            hash = await crowdContract.buyTokenByBNB(item.price * 1000);
         } else {
             const usdtContract = new UsdtContract(web3Provider);
             await usdtContract.approve(crowdContract._contractAddress, item.rate)
-            hash = await crowdContract.buyTokenByUSDT(item.price)
+            hash = await crowdContract.buyTokenByUSDT(item.price * 1000)
         }
         console.log("hash " + hash + "item bnb " + item.isBnb);
         try {
