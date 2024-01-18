@@ -49,8 +49,8 @@ export default function ItemIco({ item }: { item: IItemIco }) {
             hash = await crowdContract.buyTokenByBNB(item.price * 1000);
         } else {
             const usdtContract = new UsdtContract(web3Provider);
-            await usdtContract.approve(crowdContract._contractAddress, item.rate)
-            hash = await crowdContract.buyTokenByUSDT(item.price * 1000)
+            await usdtContract.approve(crowdContract._contractAddress, item.price)
+            hash = await crowdContract.buyTokenByUSDT(item.price * 10000)
         }
         console.log("hash " + hash + "item bnb " + item.isBnb);
         try {
