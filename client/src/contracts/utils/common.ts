@@ -31,7 +31,7 @@ export const getRPC = () => {
 
 export const SMART_CONTRACT_ADDRESS = {
     CROWD_SALE: {
-        97: '0x853fd8DaBabE6C463739Ee87687aBf14784F404b',
+        97: '0x6F24487f644AA71b0Ac52e0964D925eAd6B2b118',
         56: '',
     },
     USDT: {
