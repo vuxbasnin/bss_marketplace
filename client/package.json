@@ -62,6 +62,8 @@
   "devDependencies": {
     "@mui/lab": "^5.0.0-alpha.160",
     "@mui/system": "^5.15.4",
-    "path-browserify": "^1.0.1"
+    "@react-spring/web": "^9.7.3",
+    "path-browserify": "^1.0.1",
+    "react-spring": "^9.7.3"
   }
 }

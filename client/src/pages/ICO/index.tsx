@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, Box } from '@mui/material';
+import { Button, Modal } from '@material-ui/core';
 
 import useStyle from './styles';
 import { IItemIco, IRate } from '../../_types_';
 import CrowdSaleContract from '../../contracts/CrowdSaleContract';
 import ItemIco from './ItemIco';
-import { bgHeaderHome } from 'src/constant';
 
 export default function ICO() {
     const classes = useStyle();
     const [rate, setRate] = React.useState<IRate>({ usdtRate: 0, bnbRate: 0 });
+    const [isOpenModal, setModal] = React.useState(true);
 
     const getRate = React.useCallback(async () => {
         const crowdSaleContract = new CrowdSaleContract();
@@ -18,6 +19,14 @@ export default function ICO() {
         console.log({ bnbRate, usdtRate });
         setRate({ usdtRate, bnbRate })
     }, [])
+
+    const handlerClose = () => {
+
+    }
+
+    const handleLogin = () => {
+
+    }
 
     React.useEffect(() => {
         getRate()
@@ -46,7 +55,18 @@ export default function ICO() {
     }
 
     return (
-        <Container maxWidth="lg" fixed>
+        <Container maxWidth="lg" fixed className={classes.container}>
+            <Modal open={isOpenModal} onClose={handlerClose} className={classes.modalContainer}>
+                <Box >
+                    <Button
+                        className={classes.btnOpenBscScan}
+                        variant="contained"
+                        onClick={handleLogin}
+                    >
+                        View on BscScan
+                    </Button>
+                </Box>
+            </Modal>
             <Grid container className={classes.gridContainer}>
                 {listItem.map((item, index) => {
                     return (
