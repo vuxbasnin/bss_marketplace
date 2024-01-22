@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { bgHeaderHome, bgModal } from 'src/constant';
+import { bgHeaderHome } from 'src/constant';
 
 export default makeStyles((theme) => ({
     container: {

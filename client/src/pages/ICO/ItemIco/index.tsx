@@ -3,10 +3,10 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ethers } from 'ethers';
 import { LoadingButton } from '@mui/lab';
-import { Container, Grid, Box, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Button, Modal } from '@material-ui/core';
 import CancelIcon from '@mui/icons-material/Cancel';
 
@@ -33,13 +33,13 @@ export default function ItemIco({ item }: { item: IItemIco }) {
     const [hash, setHash] = React.useState('');
 
     React.useEffect(() => {
-        if (loginResponse.length !== 0 && window.ethereum || loginSuccess) {
+        if ((loginResponse.length !== 0 && window.ethereum) || loginSuccess) {
             setLogin(true)
             const provider = new ethers.providers.Web3Provider(window.ethereum, undefined)
             console.log("provider", provider);
             setWeb3Provider(provider)
         }
-    }, [loginResponse])
+    }, [loginResponse.length, loginSuccess])
 
     React.useEffect(() => {
         console.log("web3Provider", web3Provider);
@@ -81,7 +81,7 @@ export default function ItemIco({ item }: { item: IItemIco }) {
                 window.open(`https://bscscan.com/tx/${hash}`)
             }
         } catch (error) {
-            
+
         }
     }
 

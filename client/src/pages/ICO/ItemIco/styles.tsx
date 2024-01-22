@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import { bgHeaderHome, clBgHoverItemSidebar, clTextMainChoose } from "src/constant";
+import { bgHeaderHome, clTextMainChoose } from "src/constant";
 
 export default makeStyles((theme) => ({
     container: {

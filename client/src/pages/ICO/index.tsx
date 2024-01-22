@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Container, Grid, Box, Typography } from '@mui/material';
-import { Button, Modal } from '@material-ui/core';
+import { Container, Grid } from '@mui/material';
 
 import useStyle from './styles';
 import { IItemIco, IRate } from '../../_types_';
