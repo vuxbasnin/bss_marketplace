@@ -51,9 +51,38 @@ export default makeStyles((theme) => ({
     },
     btnBuyDisable: {
         display: 'flex',
+        color: 'white !important',
         margin: 'auto !important',
         width: "100% !important",
         marginTop: '16px !important',
         backgroundColor: 'gray !important',
+    },
+    modalContainer: {
+        display: 'flex',
+        justifyContent: 'center !important',
+        alignItems: 'center',
+    },
+    modal: {
+        position: 'absolute',
+        top: '30%',
+        left: '50%',
+        width: 400,
+        height: 200,
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: bgHeaderHome,
+        border: '2px solid red',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center',
+    },
+    btnOpenBscScan: {
+        display: 'flex',
+        position: 'absolute',
+        bottom: '10%',
+    },
+    txtHash: {
+        color: clTextMainChoose,
+        fontSize: '14px !important',
     }
 }))

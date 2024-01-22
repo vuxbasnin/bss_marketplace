@@ -3,10 +3,11 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
 import { useSelector, useDispatch } from 'react-redux';
 import { ethers } from 'ethers';
 import { LoadingButton } from '@mui/lab';
+import { Container, Grid, Box, Typography } from '@mui/material';
+import { Button, Modal } from '@material-ui/core';
 
 import { IItemIco } from 'src/_types_';
 import { bgHeaderHome, clTextMainChoose } from 'src/constant';
@@ -26,6 +27,8 @@ export default function ItemIco({ item }: { item: IItemIco }) {
     const [loginSuccess, setLogin] = React.useState(utils.getSessionsPref(KEY_LOGIN));
     const [web3Provider, setWeb3Provider] = React.useState<ethers.providers.Web3Provider>()
     const [isLoading, setLoading] = React.useState(false)
+    const [isOpenModal, setModal] = React.useState(false);
+    const [hash, setHash] = React.useState("");
 
     React.useEffect(() => {
         if (loginResponse.length !== 0 && window.ethereum || loginSuccess) {
@@ -53,6 +56,7 @@ export default function ItemIco({ item }: { item: IItemIco }) {
             hash = await crowdContract.buyTokenByUSDT(item.price * 1000)
         }
         console.log("hash " + hash + "item bnb " + item.isBnb);
+        setHash(hash)
         try {
 
         } catch (error) {
@@ -60,8 +64,30 @@ export default function ItemIco({ item }: { item: IItemIco }) {
         }
     }
 
+    const handlerClose = () => {
+        setModal(false)
+    }
+
+    const handlerOpenModal = () => {
+        setModal(true)
+    }
+
     return (
         <Card className={classes.container} sx={{ backgroundColor: bgHeaderHome }}>
+            <Modal open={isOpenModal} onClose={handlerClose} className={classes.modalContainer}>
+                <Box className={classes.modal} >
+                    <Typography variant='body2' className={classes.txtHash}>
+                        0x123123asdasd23123asdasd123
+                    </Typography>
+                    <Button
+                        className={classes.btnOpenBscScan}
+                        variant="contained"
+                        onClick={handlerOpenModal}
+                    >
+                        View on BscScan
+                    </Button>
+                </Box>
+            </Modal>
             <CardMedia
                 component="img"
                 alt="green iguana"
@@ -93,7 +119,7 @@ export default function ItemIco({ item }: { item: IItemIco }) {
                     size="medium"
                     variant='outlined'
                     loading={isLoading}
-                    onClick={handleBuyIco}
+                    onClick={handlerOpenModal}
                     sx={{ backgroundColor: !isLoading ? '' : clTextMainChoose }}>
                     Buy now
                 </LoadingButton>

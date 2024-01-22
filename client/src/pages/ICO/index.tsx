@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Grid, Box } from '@mui/material';
+import { Container, Grid, Box, Typography } from '@mui/material';
 import { Button, Modal } from '@material-ui/core';
 
 import useStyle from './styles';
@@ -10,23 +10,13 @@ import ItemIco from './ItemIco';
 export default function ICO() {
     const classes = useStyle();
     const [rate, setRate] = React.useState<IRate>({ usdtRate: 0, bnbRate: 0 });
-    const [isOpenModal, setModal] = React.useState(true);
 
     const getRate = React.useCallback(async () => {
         const crowdSaleContract = new CrowdSaleContract();
         const bnbRate = await crowdSaleContract.getBnbRate();
         const usdtRate = await crowdSaleContract.getUsdtRate();
-        console.log({ bnbRate, usdtRate });
         setRate({ usdtRate, bnbRate })
     }, [])
-
-    const handlerClose = () => {
-
-    }
-
-    const handleLogin = () => {
-
-    }
 
     React.useEffect(() => {
         getRate()
@@ -55,18 +45,7 @@ export default function ICO() {
     }
 
     return (
-        <Container maxWidth="lg" fixed className={classes.container}>
-            <Modal open={isOpenModal} onClose={handlerClose} className={classes.modalContainer}>
-                <Box >
-                    <Button
-                        className={classes.btnOpenBscScan}
-                        variant="contained"
-                        onClick={handleLogin}
-                    >
-                        View on BscScan
-                    </Button>
-                </Box>
-            </Modal>
+        <Container maxWidth="lg" fixed>
             <Grid container className={classes.gridContainer}>
                 {listItem.map((item, index) => {
                     return (
