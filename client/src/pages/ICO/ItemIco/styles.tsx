@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import { bgHeaderHome, clTextMainChoose } from "src/constant";
+import { bgHeaderHome, clBgHoverItemSidebar, clTextMainChoose } from "src/constant";
 
 export default makeStyles((theme) => ({
     container: {
@@ -56,33 +56,24 @@ export default makeStyles((theme) => ({
         width: "100% !important",
         marginTop: '16px !important',
         backgroundColor: 'gray !important',
+        pointerEvents: 'none',
     },
-    modalContainer: {
+    btnViewBscScan: {
         display: 'flex',
-        justifyContent: 'center !important',
-        alignItems: 'center',
+        margin: 'auto !important',
+        width: "50% !important",
+        marginTop: '16px !important',
+        color: 'white !important',
+        backgroundColor: clTextMainChoose,
+        '&.MuiButton-root:hover': {
+            backgroundColor: clTextMainChoose,
+            color: 'white',
+        }
     },
-    modal: {
+    icCancel: {
         position: 'absolute',
-        top: '30%',
-        left: '50%',
-        width: 400,
-        height: 200,
-        transform: 'translate(-50%, -50%)',
-        backgroundColor: bgHeaderHome,
-        border: '2px solid red',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignContent: 'center',
-    },
-    btnOpenBscScan: {
-        display: 'flex',
-        position: 'absolute',
-        bottom: '10%',
-    },
-    txtHash: {
-        color: clTextMainChoose,
-        fontSize: '14px !important',
+        top: '20px',
+        right: '20px',
+        color: clTextMainChoose
     }
 }))

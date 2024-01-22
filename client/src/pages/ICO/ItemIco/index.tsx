@@ -8,6 +8,7 @@ import { ethers } from 'ethers';
 import { LoadingButton } from '@mui/lab';
 import { Container, Grid, Box, Typography } from '@mui/material';
 import { Button, Modal } from '@material-ui/core';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 import { IItemIco } from 'src/_types_';
 import { bgHeaderHome, clTextMainChoose } from 'src/constant';
@@ -17,6 +18,7 @@ import useStyle from './styles'
 import { loginMetamaskState$ } from '../../../redux/selectors';
 import CrowdSaleContract from 'src/contracts/CrowdSaleContract';
 import UsdtContract from 'src/contracts/UsdtContract';
+import getChainIdFromEnv from 'src/contracts/utils/common';
 
 declare var window: any;
 
@@ -28,7 +30,7 @@ export default function ItemIco({ item }: { item: IItemIco }) {
     const [web3Provider, setWeb3Provider] = React.useState<ethers.providers.Web3Provider>()
     const [isLoading, setLoading] = React.useState(false)
     const [isOpenModal, setModal] = React.useState(false);
-    const [hash, setHash] = React.useState("");
+    const [hash, setHash] = React.useState('');
 
     React.useEffect(() => {
         if (loginResponse.length !== 0 && window.ethereum || loginSuccess) {
@@ -56,34 +58,67 @@ export default function ItemIco({ item }: { item: IItemIco }) {
             hash = await crowdContract.buyTokenByUSDT(item.price * 1000)
         }
         console.log("hash " + hash + "item bnb " + item.isBnb);
-        setHash(hash)
         try {
-
+            if (hash !== '') {
+                setHash(hash)
+                setLoading(false)
+                setModal(true)
+            }
         } catch (error) {
 
         }
     }
 
-    const handlerClose = () => {
+    const handleClickClose = () => {
         setModal(false)
     }
 
-    const handlerOpenModal = () => {
-        setModal(true)
+    const handleClickViewInBscScan = () => {
+        try {
+            if (getChainIdFromEnv() === 97) {
+                window.open(`https://testnet.bscscan.com/tx/${hash}`)
+            } else {
+                window.open(`https://bscscan.com/tx/${hash}`)
+            }
+        } catch (error) {
+            
+        }
+    }
+
+    const modalStyles = {
+        position: 'absolute' as 'absolute',
+        top: '30%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: bgHeaderHome,
+        border: '2px solid yellow',
+        boxShadow: 24,
+        p: 4,
+        color: clTextMainChoose,
+        wordBreak: 'break-word',
+        borderRadius: '8px',
     }
 
     return (
         <Card className={classes.container} sx={{ backgroundColor: bgHeaderHome }}>
-            <Modal open={isOpenModal} onClose={handlerClose} className={classes.modalContainer}>
-                <Box className={classes.modal} >
-                    <Typography variant='body2' className={classes.txtHash}>
-                        0x123123asdasd23123asdasd123
+            <Modal
+                open={isOpenModal}
+                onClose={handleClickClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={modalStyles}>
+                    <Button endIcon={<CancelIcon />} className={classes.icCancel} onClick={handleClickClose}>
+
+                    </Button>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Transaction hash:
                     </Typography>
-                    <Button
-                        className={classes.btnOpenBscScan}
-                        variant="contained"
-                        onClick={handlerOpenModal}
-                    >
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        {hash}
+                    </Typography>
+                    <Button className={classes.btnViewBscScan} onClick={handleClickViewInBscScan}>
                         View on BscScan
                     </Button>
                 </Box>
@@ -114,12 +149,12 @@ export default function ItemIco({ item }: { item: IItemIco }) {
             </Typography>
             <CardActions disableSpacing >
                 <LoadingButton
-                    className={loginSuccess === null ? classes.btnBuyDisable : classes.btnBuyEnable}
+                    className={loginSuccess === null ? (classes.btnBuyDisable) : classes.btnBuyEnable}
                     disableRipple={loginSuccess === null}
                     size="medium"
                     variant='outlined'
                     loading={isLoading}
-                    onClick={handlerOpenModal}
+                    onClick={handleBuyIco}
                     sx={{ backgroundColor: !isLoading ? '' : clTextMainChoose }}>
                     Buy now
                 </LoadingButton>
